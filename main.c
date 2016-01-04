@@ -18,17 +18,32 @@ int		main(int argc, char **argv)
 	int		fd;
 	char	*random;
 	int		i;
+	int		ret;
 
+	(void)argc;
 	i = 0;
 	random = NULL;
-	fd = open(argv[1], O_RDONLY);
-	while (get_next_line(fd, &random))
+	if ( 1 > (fd = open(argv[1], O_RDONLY)))
+		fd = 0;
+	while (42)
 	{
-		ft_putnbr(i);
-		ft_putstr(" : ");
-		ft_putendl(random);
-		free(random);
-		i++;
+		ret = get_next_line(fd, &random);
+		if (ret == 1)
+		{
+			ft_putnbr(i);
+			ft_putstr(" : ");
+			ft_putendl(random);
+			free(random);
+			i++;
+		}
+		else if (ret == -1)
+		{
+			ft_putendl("error");
+			break ;
+		}
+		else
+			break ;
 	}
+	ft_putendl("Bisous");
 	return (0);
 }
